@@ -1,8 +1,8 @@
 <?php
 
-namespace Flagger\Settings\Request\Entities;
+namespace Flagger\Flags\Request\Entities;
 
-use \Flagger\Settings\Response\Entities\Setting;
+use \Flagger\Flags\Response\Entities\Flag;
 
 class DefaultValue
 {
@@ -28,7 +28,7 @@ class DefaultValue
         return json_encode($this->toArray());
     }
 
-    function toSetting() : Setting {
-        return new Setting($this->key, '', $this->type, (object)array($this->type => $this->value));
+    function toFlag() : Flag {
+        return new Flag($this->key, '', $this->type, (object)array($this->type => $this->value));
     }
 }

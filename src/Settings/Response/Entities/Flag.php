@@ -1,20 +1,20 @@
 <?php
 
-namespace Flagger\Settings\Response\Entities;
+namespace Flagger\Flags\Response\Entities;
 
 use \Flagger\Exceptions\MalformedResponseException;
 
-class Setting
+class Flag
 {
-    static public function map(string|null $json) : Setting
+    static public function map(string|null $json) : Flag
     {
         if ($json == null)
         {
             throw new MalformedResponseException();
         }
 
-        $source = json_decode($json)->data->setting;
-        return new Setting($source->key, $source->name, $source->type, $source->value);
+        $source = json_decode($json)->data->flag;
+        return new Flag($source->key, $source->name, $source->type, $source->value);
     }
 
     public string $key;

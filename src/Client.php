@@ -2,9 +2,9 @@
 
 namespace Flagger;
 
-use \Flagger\Settings\Settings;
-use \Flagger\Settings\Request\Entities\Context\Context;
-use \Flagger\Settings\Request\Entities\DefaultValue;
+use \Flagger\Flags\Flags;
+use \Flagger\Flags\Request\Entities\Context\Context;
+use \Flagger\Flags\Request\Entities\DefaultValue;
 use \Flagger\Shared\HttpClient;
 use \Flagger\Shared\InMemoryCache;
 
@@ -13,7 +13,7 @@ class Client
     private InMemoryCache $cache;
     private ?Context $context;
     private ?array $defaults = [];
-    private Settings $settings;
+    private Flags $flags;
 
     public static function config(array $config = null) : Client
     {
@@ -26,7 +26,7 @@ class Client
         $client = new HttpClient($config);
 
         $this->cache = InMemoryCache::getInstance();
-        $this->settings = new Settings($client);
+        $this->flags = new Flags($client);
     }
 
     public function withContext(Context $context): Client
@@ -43,9 +43,9 @@ class Client
 
     public function connect(): Client
     {
-        $settings = $this->settings->all($this->context, $this->defaults);
-        foreach($settings as $setting) {
-            $this->cache->set($setting->key, $setting, 60);
+        $flags = $this->flags->all($this->context, $this->defaults);
+        foreach($flags as $flag) {
+            $this->cache->set($flag->key, $flag, 60);
         }
 
         return $this;
@@ -54,23 +54,23 @@ class Client
     public function all() {
         $results = $this->cache->all();
 
-        $settingKeys = join(',', array_map(function ($item) { return $item->key; }, $results));
-        $this->settings->report($settingKeys);
+        $flagKeys = join(',', array_map(function ($item) { return $item->key; }, $results));
+        $this->flags->report($flagKeys);
 
         return $results;
     }
 
-    public function get(string $key) : ?\Flagger\Settings\Response\Entities\Setting
+    public function get(string $key) : ?\Flagger\Flags\Response\Entities\Flag
     {
-        $setting = $this->cache->get($key);
-        if ($setting == null) {
-            $setting = $this->getSetting($this->context, $key, $this->getDefaultValue($key));
+        $flag = $this->cache->get($key);
+        if ($flag == null) {
+            $flag = $this->getFlag($this->context, $key, $this->getDefaultValue($key));
         }
 
-        // Report the setting usage.
-        $this->settings->report($key);
+        // Report the flag usage.
+        $this->flags->report($key);
 
-        return $setting;
+        return $flag;
     }
 
     private function getDefaultValue(string $key) : ?DefaultValue
@@ -84,8 +84,8 @@ class Client
         return null;
     }
 
-    private function getSetting(Context $context = null, string $key, ?DefaultValue $defaultValue) : \Flagger\Settings\Response\Entities\Setting
+    private function getFlag(Context $context = null, string $key, ?DefaultValue $defaultValue) : \Flagger\Flags\Response\Entities\Flag
     {
-        return $this->settings->single($context, $key, $defaultValue?->type, $defaultValue?->value);
+        return $this->flags->single($context, $key, $defaultValue?->type, $defaultValue?->value);
     }
 }

@@ -3,8 +3,8 @@
 namespace Flagger\Shared;
 
 use \GuzzleHttp\Exception\ClientException;
+use \Flagger\Exceptions\FlagNotFoundException;
 use \Flagger\Exceptions\InvalidTokenException;
-use \Flagger\Exceptions\SettingNotFoundException;
 
 class HttpClient
 {
@@ -71,7 +71,7 @@ class HttpClient
                     throw new InvalidTokenException($e);
                     
                 case 404:
-                    throw new SettingNotFoundException($e);
+                    throw new FlagNotFoundException($e);
             }
         }
     }

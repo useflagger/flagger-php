@@ -34,13 +34,13 @@ $client = new Client::config(['environment_token' => 'tok-sample'])->connect();
 
 ## Context
 
-When retrieving values for settings a context can be provided that can change the value based on unique attributes of the context.
+When retrieving values for feature flags a context can be provided that can change the value based on unique attributes of the context.
 
 ```php
 use \Flagger\Client;
-use \Flagger\Settings\Request\Entities\Context\Attribute;
-use \Flagger\Settings\Request\Entities\Context\Context;
-use \Flagger\Settings\Request\Entities\Context\Value;
+use \Flagger\Flags\Request\Entities\Context\Attribute;
+use \Flagger\Flags\Request\Entities\Context\Context;
+use \Flagger\Flags\Request\Entities\Context\Value;
 
 $context = new Context('user', 'John Doe', 'john-doe', [
     new Attribute('key', [
@@ -53,13 +53,13 @@ $client = Client::config()
     ->connect();
 
 $results = $client->all();
-$result = $client->get('setting-key')->getValue();
+$result = $client->get('flag-key')->getValue();
 
 ```
 
 ## Usage
 
-Before retrieving a setting or flag, create a new client. If you configured your environment token key via environment variables there's nothing to add. Otherwise, see the example above.
+Before retrieving a feature flag, create a new client. If you configured your environment token key via environment variables there's nothing to add. Otherwise, see the example above.
 
 ```php
 use \Flagger\Client;
@@ -67,9 +67,9 @@ use \Flagger\Client;
 $client = new Client();
 ```
 
-### Retrieving Settings
+### Retrieving Flags
 
-#### All Settings
+#### All Flags
 
 ```php
 $results = $client->all();
@@ -82,10 +82,10 @@ foreach ($results as $results) {
 }
 ```
 
-#### Single Setting
+#### Single Flag
 
 ```php
-$result = $client->setting('setting-key');
+$result = $client->flag('flag-key');
 
 $key = $result->key;
 $name = $result->name;
@@ -107,6 +107,6 @@ Everyone interacting in the Flagger Software’s code bases, issue trackers, cha
 
 ## What is Flagger?
 
-[Flagger](https://useflagger.com/) allows you to control which features and settings are enabled in your application giving you better flexibility to deploy code and release features.
+[Flagger](https://useflagger.com/) allows you to control how feature flags are configured in your application giving you better flexibility to deploy code and release when you are ready.
 
 Flagger Software was started in 2023 as an alternative to highly complex feature flag tools. Learn more [about us](https://useflagger.com/).

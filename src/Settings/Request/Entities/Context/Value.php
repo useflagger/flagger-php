@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagger\Settings\Request\Entities\Context;
+namespace Flagger\Flags\Request\Entities\Context;
 
 class Value
 {
