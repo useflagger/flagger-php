@@ -2,7 +2,7 @@
 
 namespace Flagger\Shared;
 
-class InMemoryCache 
+class InMemoryCache
 {
     private static InMemoryCache $instance;
 

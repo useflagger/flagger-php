@@ -10,13 +10,13 @@ class DefaultValue
     public string $type;
     public string|bool|int|float $value;
 
-    function __construct(string $key, string $type, string|bool|int|float $value) {
+    public function __construct(string $key, string $type, string|bool|int|float $value) {
         $this->key = $key;
         $this->type = $type;
         $this->value = $value;
     }
 
-    function toArray() : array {
+    public function toArray() : array {
         return [
             'key' => $this->key,
             'type' => $this->type,
@@ -24,11 +24,11 @@ class DefaultValue
         ];
     }
 
-    function toJson() : String {
+    public function toJson() : String {
         return json_encode($this->toArray());
     }
 
-    function toFlag() : Flag {
+    public function toFlag() : Flag {
         return new Flag($this->key, '', $this->type, (object)array($this->type => $this->value));
     }
 }

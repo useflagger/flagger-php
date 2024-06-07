@@ -84,8 +84,7 @@ class Flags {
         $endpoint = "/flags/$key";
 
         try {
-            $result = Flag::map($this->client->get($endpoint, $headers));
-            return $result;
+            return Flag::map($this->client->get($endpoint, $headers));
         } catch (InvalidTokenException|FlagNotFoundException $e) {
             throw $e;
         } catch (Exception) {

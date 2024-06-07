@@ -72,6 +72,9 @@ class HttpClient
                     
                 case 404:
                     throw new FlagNotFoundException($e);
+
+                default:
+                    throw $e;
             }
         }
     }

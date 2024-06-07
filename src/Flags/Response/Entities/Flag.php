@@ -6,7 +6,7 @@ use \Flagger\Exceptions\MalformedResponseException;
 
 class Flag
 {
-    static public function map(string|null $json) : Flag
+    public static function map(string|null $json) : Flag
     {
         if ($json == null)
         {
@@ -22,14 +22,14 @@ class Flag
     public string $type;
     private Object $value;
 
-    function __construct(string $key, string $name, string $type, Object $value) {
+    public function __construct(string $key, string $name, string $type, Object $value) {
         $this->key = $key;
         $this->name = $name;
         $this->type = $type;
         $this->value = $value;
     }
 
-    function getValue() : bool|float|int|string {
+    public function getValue() : bool|float|int|string {
         switch($this->type) {
             case 'boolean':
                 return $this->getBoolean();
@@ -59,8 +59,9 @@ class Flag
         $propertyNames = array_keys(get_object_vars($obj));
         foreach($propertyNames as $propertyName)
         {
-            if (strcasecmp($name, $propertyName) == 0)
-            return $obj->$propertyName;
+            if (strcasecmp($name, $propertyName) == 0) {
+                return $obj->$propertyName;
+            }
         }
         return null;
     }

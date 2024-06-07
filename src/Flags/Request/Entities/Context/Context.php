@@ -10,7 +10,7 @@ class Context
 
     public ?array $attributes = null;
 
-    function __construct(string $type, string $name, string $identifier, ?array $attributes = null)
+    public function __construct(string $type, string $name, string $identifier, ?array $attributes = null)
     {
         $this->type = $type;
         $this->name = $name;
