@@ -40,10 +40,10 @@ class Flags {
         } catch (InvalidTokenException $e) {
             throw $e;
         } catch (Exception $e) {
-            report($e);
+            error_log($e->getMessage());
             
             if ($defaultValues != null) {
-                return array_map(fn($value): Flag => new Flag($value->key, '', $value->type, (object)array($value->type => $value->value)), $defaultValues);
+                return array_map(fn($value): Flag => $value->toFlag(), $defaultValues);
             }
             
             throw new NoResponseException();
@@ -58,8 +58,8 @@ class Flags {
             $this->client->post($endpoint);
         } catch (InvalidTokenException|FlagNotFoundException $e) {
             throw $e;
-        } catch (Exception) {
-            throw new NoResponseException();
+        } catch (Exception $e) {
+            error_log($e->getMessage());
         }
 
     }
@@ -90,9 +90,9 @@ class Flags {
             throw $e;
         } catch (Exception) {
             if ($defaultValue != null) {
-                return new Flag($key, '', $type, (object)array($type => $defaultValue));
+                return $default->toFlag();
             }
-            
+
             throw new NoResponseException();
         }
     }

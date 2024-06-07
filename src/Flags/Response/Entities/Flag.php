@@ -42,15 +42,26 @@ class Flag
     }
 
     private function getBoolean() : bool {
-        return (bool)($this->value->boolean);
+        return (bool)($this->findPropertyByNameCaseInsensitive($this->value, 'boolean'));
     }
 
     private function getNumber() : float|int {
-        $value = $this->value->number;
+        $value = $this->findPropertyByNameCaseInsensitive($this->value, 'number');
         return is_int($value) ? (int)$value : (float)$value;
     }
 
-    private function getString() : string {
-        return $this->value->string;
+    private function getString() : ?string {
+        return $this->findPropertyByNameCaseInsensitive($this->value, 'string');
+    }
+
+    private function findPropertyByNameCaseInsensitive($obj, $name)
+    {
+        $propertyNames = array_keys(get_object_vars($obj));
+        foreach($propertyNames as $propertyName)
+        {
+            if (strcasecmp($name, $propertyName) == 0)
+            return $obj->$propertyName;
+        }
+        return null;
     }
 }

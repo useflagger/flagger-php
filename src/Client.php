@@ -60,7 +60,7 @@ class Client
         return $results;
     }
 
-    public function get(string $key) : ?\Flagger\Flags\Response\Entities\Flag
+    public function get(string $key) : \Flagger\Flags\Response\Entities\Flag
     {
         $flag = $this->cache->get($key);
         if ($flag == null) {
