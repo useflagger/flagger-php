@@ -64,7 +64,7 @@ class Flags {
 
     }
 
-    public function single(Context $context = null, string $key, ?string $type, string|bool|int|float $defaultValue = null) : Flag {
+    public function single(string $key, Context $context = null, ?string $type = null, string|bool|int|float $defaultValue = null) : Flag {
         
         $default = null;
         if ($defaultValue != null) {

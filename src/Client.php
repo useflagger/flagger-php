@@ -64,7 +64,7 @@ class Client
     {
         $flag = $this->cache->get($key);
         if ($flag == null) {
-            $flag = $this->getFlag($this->context, $key, $this->getDefaultValue($key));
+            $flag = $this->getFlag($key, $this->context, $this->getDefaultValue($key));
         }
 
         // Report the flag usage.
@@ -84,8 +84,8 @@ class Client
         return null;
     }
 
-    private function getFlag(Context $context = null, string $key, ?DefaultValue $defaultValue) : \Flagger\Flags\Response\Entities\Flag
+    private function getFlag(string $key, Context $context = null, ?DefaultValue $defaultValue = null) : \Flagger\Flags\Response\Entities\Flag
     {
-        return $this->flags->single($context, $key, $defaultValue?->type, $defaultValue?->value);
+        return $this->flags->single($key, $context, $defaultValue?->type, $defaultValue?->value);
     }
 }
