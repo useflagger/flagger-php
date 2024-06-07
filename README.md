@@ -1,6 +1,6 @@
 # Flagger API SDK for PHP 
 
-[![Build Status](https://github.com/useflagger/flagger-php/actions/workflows/tests.yml/badge.svg)](https://github.com/useflagger/flagger-php)
+[![Build Status](https://github.com/useflagger/flagger-php/actions/workflows/tests.yml/badge.svg)](https://github.com/useflagger/flagger-php) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=useflagger_flagger-php&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=useflagger_flagger-php)
 
 This library helps with integrating Flagger into PHP applications.
 
